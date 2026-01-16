@@ -8,6 +8,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import Link from "next/link";
 
 export default function ToolsLayout({
   children,
@@ -23,9 +24,12 @@ export default function ToolsLayout({
             <SidebarTrigger className="-ml-1 text-muted-foreground hover:text-foreground" />
             <Separator orientation="vertical" className="mr-2 h-4 bg-border" />
             <div className="flex items-center gap-2 text-sm">
-              <span className="font-medium text-muted-foreground hidden sm:inline-block">
+              <Link
+                href={"/tools"}
+                className="font-medium text-muted-foreground hidden sm:inline-block"
+              >
                 Tools
-              </span>
+              </Link>
               <span className="text-muted-foreground hidden sm:inline-block">
                 /
               </span>

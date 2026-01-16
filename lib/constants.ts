@@ -15,6 +15,7 @@ import {
   Type,
   type LucideIcon,
   FileCode,
+  Split,
 } from "lucide-react";
 
 export const APP_CONFIG = {
@@ -89,6 +90,12 @@ export const NAV_ITEMS: NavGroup[] = [
         icon: Type,
         description: "Generate placeholder text.",
       },
+      {
+        title: "QR Code",
+        url: "/tools/qrcode",
+        icon: QrCode,
+        description: "Generate downloadable QR codes.",
+      },
     ],
   },
   {
@@ -124,6 +131,12 @@ export const NAV_ITEMS: NavGroup[] = [
         url: "/tools/keycode",
         icon: Keyboard,
         description: "Visualize Javascript keyboard events.",
+      },
+      {
+        title: "Diff Viewer",
+        url: "/tools/diff",
+        icon: Split,
+        description: "Compare text differences side-by-side.",
       },
     ],
   },
