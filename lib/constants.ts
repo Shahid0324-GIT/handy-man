@@ -5,6 +5,7 @@ import {
   Code2,
   QrCode,
   Palette,
+  Lock,
   type LucideIcon,
 } from "lucide-react";
 
@@ -75,6 +76,12 @@ export const NAV_ITEMS: NavGroup[] = [
         url: "/tools/shadows",
         icon: Palette,
         description: "Create smooth, layered box-shadows.",
+      },
+      {
+        title: "AES Encryption",
+        url: "/tools/aes",
+        icon: Lock,
+        description: "Encrypt/Decrypt text with a secret key.",
       },
     ],
   },
