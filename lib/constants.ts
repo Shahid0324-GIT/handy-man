@@ -18,6 +18,8 @@ import {
   Split,
   ShieldCheck,
   Scaling,
+  Clock,
+  Image,
 } from "lucide-react";
 
 export const APP_CONFIG = {
@@ -68,6 +70,12 @@ export const NAV_ITEMS: NavGroup[] = [
         icon: Scaling,
         description: "Convert CSS units.",
       },
+      {
+        title: "Image Converter",
+        url: "/tools/image",
+        icon: Image,
+        description: "Convert between WebP, PNG, and JPG.",
+      },
     ],
   },
   {
@@ -103,6 +111,12 @@ export const NAV_ITEMS: NavGroup[] = [
         url: "/tools/qrcode",
         icon: QrCode,
         description: "Generate downloadable QR codes.",
+      },
+      {
+        title: "Cron Generator",
+        url: "/tools/cron",
+        icon: Clock,
+        description: "Create cron schedule expressions.",
       },
     ],
   },
@@ -154,4 +168,14 @@ export const NAV_ITEMS: NavGroup[] = [
       },
     ],
   },
+];
+
+export const DAYS = [
+  { id: "0", label: "Sun" },
+  { id: "1", label: "Mon" },
+  { id: "2", label: "Tue" },
+  { id: "3", label: "Wed" },
+  { id: "4", label: "Thu" },
+  { id: "5", label: "Fri" },
+  { id: "6", label: "Sat" },
 ];
