@@ -113,10 +113,11 @@ export default function RegexPage() {
       title="Regex Studio"
       description="Test, debug, and generate Regular Expressions."
     >
-      <div className="grid h-full gap-6 lg:grid-cols-12">
-        {/* LEFT: Input & Controls */}
-        <div className="lg:col-span-8 flex flex-col gap-6 h-full">
-          <div className="flex flex-col gap-2">
+      <div className="grid h-full gap-6 lg:grid-cols-12 overflow-hidden">
+        {/* LEFT: Input & Controls (Scrolls internally) */}
+        <div className="lg:col-span-8 flex flex-col gap-6 h-full overflow-hidden">
+          {/* Header Section (Fixed Height) */}
+          <div className="flex flex-col gap-2 shrink-0">
             <Label>Regular Expression</Label>
             <div className="flex gap-2">
               <div className="flex-1 relative">
@@ -134,7 +135,7 @@ export default function RegexPage() {
                   /
                 </span>
               </div>
-              <div className="flex items-center gap-1 bg-muted/30 p-1 rounded-md border">
+              <div className="flex items-center gap-1 bg-muted/30 p-1 rounded-md border shrink-0">
                 {(["g", "i", "m"] as const).map((f) => (
                   <button
                     key={f}
@@ -157,19 +158,22 @@ export default function RegexPage() {
             )}
           </div>
 
-          <div className="grid grid-rows-2 gap-4 flex-1 min-h-100">
-            <div className="flex flex-col gap-2 h-full">
+          {/* Editors Grid (Fills remaining height) */}
+          <div className="grid grid-rows-2 gap-4 flex-1 min-h-0">
+            {/* Top: Text Input */}
+            <div className="flex flex-col gap-2 h-full min-h-0">
               <Label>Test String</Label>
               <Textarea
                 value={text}
                 onChange={(e) => setText(e.target.value)}
-                className="flex-1 font-mono resize-none leading-relaxed"
+                className="flex-1 font-mono resize-none leading-relaxed h-full"
                 placeholder="Paste your text here..."
               />
             </div>
 
-            <div className="flex flex-col gap-2 h-full">
-              <div className="flex items-center justify-between">
+            {/* Bottom: Highlight Preview */}
+            <div className="flex flex-col gap-2 h-full min-h-0">
+              <div className="flex items-center justify-between shrink-0">
                 <Label>Match Preview</Label>
                 <Badge variant="secondary">
                   {matches.length} matches found
@@ -182,10 +186,11 @@ export default function RegexPage() {
           </div>
         </div>
 
-        {/* RIGHT: Generator / Sidebar */}
-        <div className="lg:col-span-4 flex flex-col gap-6 h-full border-l pl-0 lg:pl-6">
-          <div className="flex flex-col gap-3 max-h-[40%] overflow-hidden">
-            <Label>Captured Groups</Label>
+        {/* RIGHT: Generator / Sidebar (Scrolls internally) */}
+        <div className="lg:col-span-4 flex flex-col gap-6 h-full border-l pl-0 lg:pl-6 overflow-hidden">
+          {/* Top: Captured Groups */}
+          <div className="flex flex-col gap-3 flex-1 min-h-0 overflow-hidden">
+            <Label className="shrink-0">Captured Groups</Label>
             <div className="flex-1 overflow-y-auto space-y-2 pr-2">
               {matches.length === 0 ? (
                 <p className="text-sm text-muted-foreground italic">
@@ -193,7 +198,7 @@ export default function RegexPage() {
                 </p>
               ) : (
                 matches.map((m, i) => (
-                  <Card key={i} className="p-3 text-sm space-y-1">
+                  <Card key={i} className="p-3 text-sm space-y-1 shrink-0">
                     <div className="flex justify-between text-xs text-muted-foreground">
                       <span>Match #{i + 1}</span>
                       <span>Index: {m.index}</span>
@@ -222,10 +227,11 @@ export default function RegexPage() {
             </div>
           </div>
 
-          <div className="h-px bg-border" />
+          <div className="h-px bg-border shrink-0" />
 
-          <div className="flex flex-col gap-3 flex-1 overflow-hidden">
-            <Label className="flex items-center gap-2">
+          {/* Bottom: Quick Patterns */}
+          <div className="flex flex-col gap-3 flex-1 min-h-0 overflow-hidden">
+            <Label className="flex items-center gap-2 shrink-0">
               <Regex className="size-4" /> Quick Patterns
             </Label>
             <div className="flex-1 overflow-y-auto pr-2 space-y-2">
@@ -233,7 +239,7 @@ export default function RegexPage() {
                 <button
                   key={item.name}
                   onClick={() => insertPattern(item.pattern)}
-                  className="w-full text-left p-3 rounded-md border hover:bg-muted/50 hover:border-primary/50 transition-all group"
+                  className="w-full text-left p-3 rounded-md border hover:bg-muted/50 hover:border-primary/50 transition-all group shrink-0"
                 >
                   <div className="flex justify-between items-center mb-1">
                     <span className="font-medium text-sm">{item.name}</span>
