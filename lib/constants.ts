@@ -22,6 +22,7 @@ import {
   Image,
   CalendarClock,
   FileSpreadsheet,
+  Regex,
 } from "lucide-react";
 
 export const APP_CONFIG = {
@@ -165,7 +166,7 @@ export const NAV_ITEMS: NavGroup[] = [
     ],
   },
   {
-    title: "Dev Extras",
+    title: "Dev Tools",
     icon: Cpu,
     items: [
       {
@@ -180,6 +181,12 @@ export const NAV_ITEMS: NavGroup[] = [
         icon: Split,
         description: "Compare text differences side-by-side.",
       },
+      {
+        title: "Regex Studio",
+        url: "/tools/regex",
+        icon: Regex,
+        description: "Test and generate regular expressions.",
+      },
     ],
   },
 ];
@@ -192,4 +199,24 @@ export const DAYS = [
   { id: "4", label: "Thu" },
   { id: "5", label: "Fri" },
   { id: "6", label: "Sat" },
+];
+
+export const PATTERNS = [
+  { name: "Email Address", pattern: "[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}" },
+  {
+    name: "Strong Password",
+    pattern: "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$",
+  },
+  { name: "IPv4 Address", pattern: "\\b(?:\\d{1,3}\\.){3}\\d{1,3}\\b" },
+  { name: "Date (YYYY-MM-DD)", pattern: "\\d{4}-\\d{2}-\\d{2}" },
+  {
+    name: "URL / Link",
+    pattern:
+      "https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)",
+  },
+  { name: "Hex Color", pattern: "#?([a-fA-F0-9]{6}|[a-fA-F0-9]{3})" },
+  {
+    name: "Phone (US)",
+    pattern: "\\(?([0-9]{3})\\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})",
+  },
 ];
