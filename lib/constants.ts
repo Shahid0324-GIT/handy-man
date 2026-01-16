@@ -6,6 +6,12 @@ import {
   QrCode,
   Palette,
   Lock,
+  Keyboard,
+  Wrench,
+  Zap,
+  Globe,
+  Shield,
+  Cpu,
   type LucideIcon,
 } from "lucide-react";
 
@@ -15,21 +21,23 @@ export const APP_CONFIG = {
   description: "Developer Utility Belt",
 };
 
-interface ToolItem {
+export interface ToolItem {
   title: string;
   url: string;
   icon: LucideIcon;
   description: string;
 }
 
-interface NavGroup {
+export interface NavGroup {
   title: string;
+  icon: LucideIcon;
   items: ToolItem[];
 }
 
 export const NAV_ITEMS: NavGroup[] = [
   {
-    title: "Essentials",
+    title: "Converters",
+    icon: Wrench,
     items: [
       {
         title: "JSON Formatter",
@@ -47,6 +55,7 @@ export const NAV_ITEMS: NavGroup[] = [
   },
   {
     title: "Generators",
+    icon: Zap,
     items: [
       {
         title: "Hash Generator",
@@ -60,10 +69,17 @@ export const NAV_ITEMS: NavGroup[] = [
         icon: QrCode,
         description: "Generate random UUIDs and ObjectIDs.",
       },
+      {
+        title: "CSS Shadows",
+        url: "/tools/shadows",
+        icon: Palette,
+        description: "Create smooth, layered box-shadows.",
+      },
     ],
   },
   {
     title: "Web Tools",
+    icon: Globe,
     items: [
       {
         title: "URL Builder",
@@ -71,17 +87,29 @@ export const NAV_ITEMS: NavGroup[] = [
         icon: LinkIcon,
         description: "Parse URLs and build UTM parameters.",
       },
-      {
-        title: "CSS Shadows",
-        url: "/tools/shadows",
-        icon: Palette,
-        description: "Create smooth, layered box-shadows.",
-      },
+    ],
+  },
+  {
+    title: "Security",
+    icon: Shield,
+    items: [
       {
         title: "AES Encryption",
         url: "/tools/aes",
         icon: Lock,
-        description: "Encrypt/Decrypt text with a secret key.",
+        description: "Encrypt and decrypt text using AES.",
+      },
+    ],
+  },
+  {
+    title: "Dev Extras",
+    icon: Cpu,
+    items: [
+      {
+        title: "Keycode Info",
+        url: "/tools/keycode",
+        icon: Keyboard,
+        description: "Visualize Javascript keyboard events.",
       },
     ],
   },

@@ -4,16 +4,22 @@ import {
   Sidebar,
   SidebarContent,
   SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 import { NAV_ITEMS, APP_CONFIG } from "@/lib/constants";
-import { Terminal } from "lucide-react";
+import { Terminal, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -22,9 +28,8 @@ export function AppSidebar() {
 
   return (
     <Sidebar collapsible="icon">
+      {/* HEADER */}
       <SidebarHeader className="py-4">
-        {" "}
-        {/* Added padding to header */}
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton
@@ -37,8 +42,6 @@ export function AppSidebar() {
                   <Terminal className="size-5" />
                 </div>
                 <div className="flex flex-col gap-0.5 leading-none ml-2">
-                  {" "}
-                  {/* Added margin left */}
                   <span className="font-bold text-base">{APP_CONFIG.name}</span>
                   <span className="text-xs text-muted-foreground font-medium">
                     v{APP_CONFIG.version}
@@ -50,55 +53,58 @@ export function AppSidebar() {
         </SidebarMenu>
       </SidebarHeader>
 
-      <SidebarContent className="gap-0">
-        {" "}
-        {/* Removed default gap to handle it manually */}
-        {NAV_ITEMS.map((group) => (
-          <SidebarGroup key={group.title} className="py-2">
-            <SidebarGroupLabel className="px-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground/70">
-              {group.title}
-            </SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {group.items.map((item) => {
-                  const isActive = pathname === item.url;
-                  return (
-                    <SidebarMenuItem key={item.title}>
-                      <SidebarMenuButton
-                        asChild
-                        tooltip={item.title}
-                        isActive={isActive}
-                        className={`
-                          my-0.5 h-9 transition-all duration-200 ease-in-out
-                          ${
-                            isActive
-                              ? "font-medium bg-sidebar-accent text-sidebar-accent-foreground shadow-sm"
-                              : "text-muted-foreground hover:text-foreground"
-                          }
-                        `}
-                      >
-                        <Link
-                          href={item.url}
-                          className="flex items-center gap-3 px-2"
-                        >
-                          {" "}
-                          {/* Added gap-3 here */}
-                          <item.icon
-                            className={`size-4 ${
-                              isActive ? "text-indigo-500" : ""
-                            }`}
-                          />
-                          <span>{item.title}</span>
-                        </Link>
+      {/* CONTENT (Collapsible Groups) */}
+      <SidebarContent>
+        <SidebarGroup>
+          <SidebarMenu>
+            {NAV_ITEMS.map((group) => {
+              // Check if any child is active to keep group open
+              const isGroupActive = group.items.some(
+                (item) => pathname === item.url
+              );
+
+              return (
+                <Collapsible
+                  key={group.title}
+                  asChild
+                  defaultOpen={isGroupActive} // Keep open if we are on a tool inside it
+                  className="group/collapsible"
+                >
+                  <SidebarMenuItem>
+                    {/* The Trigger (Parent Category) */}
+                    <CollapsibleTrigger asChild>
+                      <SidebarMenuButton tooltip={group.title}>
+                        <group.icon />
+                        <span>{group.title}</span>
+                        <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
                       </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  );
-                })}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-        ))}
+                    </CollapsibleTrigger>
+
+                    {/* The Content (Sub Items) */}
+                    <CollapsibleContent>
+                      <SidebarMenuSub>
+                        {group.items.map((item) => {
+                          const isActive = pathname === item.url;
+                          return (
+                            <SidebarMenuSubItem key={item.title}>
+                              <SidebarMenuSubButton asChild isActive={isActive}>
+                                <Link href={item.url}>
+                                  <span>{item.title}</span>
+                                </Link>
+                              </SidebarMenuSubButton>
+                            </SidebarMenuSubItem>
+                          );
+                        })}
+                      </SidebarMenuSub>
+                    </CollapsibleContent>
+                  </SidebarMenuItem>
+                </Collapsible>
+              );
+            })}
+          </SidebarMenu>
+        </SidebarGroup>
       </SidebarContent>
+
       <SidebarRail />
     </Sidebar>
   );
