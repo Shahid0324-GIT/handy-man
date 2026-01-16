@@ -17,6 +17,7 @@ interface CodeEditorProps {
   onChange?: (value: string | undefined) => void;
   language?: string;
   readOnly?: boolean;
+  wordWrap?: "off" | "on";
 }
 
 export function CodeEditor({
@@ -24,6 +25,7 @@ export function CodeEditor({
   onChange,
   language = "json",
   readOnly = false,
+  wordWrap = "off",
 }: CodeEditorProps) {
   const { resolvedTheme } = useTheme();
   const isMobile = useIsMobile();
@@ -42,7 +44,8 @@ export function CodeEditor({
         className={cn(
           "h-full w-full resize-none bg-background p-4 font-mono text-sm outline-none ring-offset-background placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
           "border rounded-md",
-          readOnly && "bg-muted/30 text-muted-foreground"
+          readOnly && "bg-muted/30 text-muted-foreground",
+          wordWrap === "on" ? "break-all whitespace-pre-wrap" : "whitespace-pre"
         )}
         placeholder={`Enter ${language} here...`}
       />
@@ -69,6 +72,7 @@ export function CodeEditor({
           fontFamily: "var(--font-mono), monospace",
           renderLineHighlight: "none",
           contextmenu: false,
+          wordWrap: wordWrap,
         }}
       />
     </div>
