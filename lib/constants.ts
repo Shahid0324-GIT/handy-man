@@ -13,6 +13,7 @@ import {
   Shield,
   Cpu,
   type LucideIcon,
+  FileCode,
 } from "lucide-react";
 
 export const APP_CONFIG = {
@@ -50,6 +51,12 @@ export const NAV_ITEMS: NavGroup[] = [
         url: "/tools/base64",
         icon: Code2,
         description: "Encode and decode text or files to Base64.",
+      },
+      {
+        title: "SVG to JSX",
+        url: "/tools/svg",
+        icon: FileCode,
+        description: "Convert SVG code to React components.",
       },
     ],
   },
