@@ -12,6 +12,7 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
   SidebarRail,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import {
   Collapsible,
@@ -26,6 +27,7 @@ import { useEffect, useState } from "react";
 
 export function AppSidebar() {
   const pathname = usePathname();
+  const sidebar = useSidebar();
   const openCommandMenu = () => {
     const event = new KeyboardEvent("keydown", {
       key: "k",
@@ -73,18 +75,20 @@ export function AppSidebar() {
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
-        <div className="px-2 mt-2">
-          <button
-            onClick={openCommandMenu}
-            className="w-full flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground bg-muted/50 hover:bg-muted/80 border rounded-md transition-colors text-left"
-          >
-            <Search className="size-4" />
-            <span className="flex-1">Search...</span>
-            <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
-              <span className="text-xs">{metaKey}</span>K
-            </kbd>
-          </button>
-        </div>
+        {sidebar.open && (
+          <div className="px-2 mt-2">
+            <button
+              onClick={openCommandMenu}
+              className="w-full flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground bg-muted/50 hover:bg-muted/80 border rounded-md transition-colors text-left"
+            >
+              <Search className="size-4" />
+              <span className="flex-1">Search...</span>
+              <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+                <span className="text-xs">{metaKey}</span>K
+              </kbd>
+            </button>
+          </div>
+        )}
       </SidebarHeader>
 
       {/* CONTENT (Collapsible Groups) */}
