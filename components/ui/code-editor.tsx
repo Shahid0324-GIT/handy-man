@@ -73,6 +73,7 @@ export function CodeEditor({
           renderLineHighlight: "none",
           contextmenu: false,
           wordWrap: wordWrap,
+          fixedOverflowWidgets: true,
         }}
       />
     </div>
