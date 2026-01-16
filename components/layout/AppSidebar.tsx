@@ -12,6 +12,7 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
   SidebarRail,
+  SidebarSeparator, // Added
   useSidebar,
 } from "@/components/ui/sidebar";
 import {
@@ -20,14 +21,31 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { NAV_ITEMS, APP_CONFIG } from "@/lib/constants";
-import { Terminal, ChevronRight, Search } from "lucide-react";
+import { Terminal, ChevronRight, Search, Star } from "lucide-react"; // Added Star
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useFavoritesStore } from "@/hooks/use-favorites-store";
 
 export function AppSidebar() {
   const pathname = usePathname();
   const sidebar = useSidebar();
+
+  const favorites = useFavoritesStore((state) => state.favorites);
+
+  const [isMounted, setIsMounted] = useState(false);
+
+  const allTools = useMemo(() => NAV_ITEMS.flatMap((g) => g.items), []);
+
+  const favoriteTools = useMemo(() => {
+    return allTools.filter((tool) => favorites.includes(tool.url));
+  }, [allTools, favorites]);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setIsMounted(true);
+  }, []);
+
   const openCommandMenu = () => {
     const event = new KeyboardEvent("keydown", {
       key: "k",
@@ -42,7 +60,6 @@ export function AppSidebar() {
   useEffect(() => {
     if (typeof navigator !== "undefined") {
       const isAppleDevice = /Mac|iPod|iPhone|iPad/.test(navigator.userAgent);
-
       if (isAppleDevice) {
         // eslint-disable-next-line react-hooks/set-state-in-effect
         setMetaKey("⌘");
@@ -91,8 +108,47 @@ export function AppSidebar() {
         )}
       </SidebarHeader>
 
-      {/* CONTENT (Collapsible Groups) */}
+      {/* CONTENT */}
       <SidebarContent>
+        {/* --- FAVORITES SECTION (New) --- */}
+        {isMounted && favoriteTools.length > 0 && (
+          <SidebarGroup>
+            <SidebarMenu>
+              <Collapsible defaultOpen className="group/collapsible">
+                <SidebarMenuItem>
+                  <CollapsibleTrigger asChild>
+                    <SidebarMenuButton tooltip="Favorites">
+                      <Star className="text-yellow-500 fill-yellow-500" />
+                      <span className="font-medium text-yellow-600 dark:text-yellow-400">
+                        Favorites
+                      </span>
+                      <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                    </SidebarMenuButton>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <SidebarMenuSub>
+                      {favoriteTools.map((tool) => (
+                        <SidebarMenuSubItem key={tool.url}>
+                          <SidebarMenuSubButton
+                            asChild
+                            isActive={pathname === tool.url}
+                          >
+                            <Link href={tool.url}>
+                              <span>{tool.title}</span>
+                            </Link>
+                          </SidebarMenuSubButton>
+                        </SidebarMenuSubItem>
+                      ))}
+                    </SidebarMenuSub>
+                  </CollapsibleContent>
+                </SidebarMenuItem>
+              </Collapsible>
+            </SidebarMenu>
+            <SidebarSeparator className="my-2" />
+          </SidebarGroup>
+        )}
+
+        {/* --- REGULAR TOOLS --- */}
         <SidebarGroup>
           <SidebarMenu>
             {NAV_ITEMS.map((group) => {
