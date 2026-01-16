@@ -16,6 +16,8 @@ import {
   type LucideIcon,
   FileCode,
   Split,
+  ShieldCheck,
+  Scaling,
 } from "lucide-react";
 
 export const APP_CONFIG = {
@@ -59,6 +61,12 @@ export const NAV_ITEMS: NavGroup[] = [
         url: "/tools/svg",
         icon: FileCode,
         description: "Convert SVG code to React components.",
+      },
+      {
+        title: "Pixel to REM",
+        url: "/tools/pixel",
+        icon: Scaling,
+        description: "Convert CSS units.",
       },
     ],
   },
@@ -119,6 +127,12 @@ export const NAV_ITEMS: NavGroup[] = [
         url: "/tools/aes",
         icon: Lock,
         description: "Encrypt and decrypt text using AES.",
+      },
+      {
+        title: "JWT Decoder",
+        url: "/tools/jwt",
+        icon: ShieldCheck,
+        description: "Decode headers and payloads.",
       },
     ],
   },
