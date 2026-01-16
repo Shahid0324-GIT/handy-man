@@ -20,6 +20,8 @@ import {
   Scaling,
   Clock,
   Image,
+  CalendarClock,
+  FileSpreadsheet,
 } from "lucide-react";
 
 export const APP_CONFIG = {
@@ -75,6 +77,18 @@ export const NAV_ITEMS: NavGroup[] = [
         url: "/tools/image",
         icon: Image,
         description: "Convert between WebP, PNG, and JPG.",
+      },
+      {
+        title: "Unix Timestamp",
+        url: "/tools/timestamp",
+        icon: CalendarClock,
+        description: "Convert epoch time to human date.",
+      },
+      {
+        title: "CSV ↔ JSON",
+        url: "/tools/csv",
+        icon: FileSpreadsheet,
+        description: "Convert data formats.",
       },
     ],
   },
