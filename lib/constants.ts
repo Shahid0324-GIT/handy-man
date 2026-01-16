@@ -12,6 +12,7 @@ import {
   Globe,
   Shield,
   Cpu,
+  Type,
   type LucideIcon,
   FileCode,
 } from "lucide-react";
@@ -81,6 +82,12 @@ export const NAV_ITEMS: NavGroup[] = [
         url: "/tools/shadows",
         icon: Palette,
         description: "Create smooth, layered box-shadows.",
+      },
+      {
+        title: "Lorem Ipsum",
+        url: "/tools/lorem",
+        icon: Type,
+        description: "Generate placeholder text.",
       },
     ],
   },
