@@ -6,7 +6,6 @@ import {
   QrCode,
   Palette,
   Lock,
-  Keyboard,
   Wrench,
   Zap,
   Globe,
@@ -31,6 +30,7 @@ import {
   PaintBucket,
   LockKeyhole,
   Server,
+  Gpu,
 } from "lucide-react";
 
 export const APP_CONFIG = {
@@ -277,12 +277,12 @@ export const NAV_ITEMS: NavGroup[] = [
   },
   {
     title: "Hardware",
-    icon: Keyboard,
+    icon: Gpu,
     items: [
       {
-        title: "Keycode Info",
+        title: "Hardware Info",
         url: "/tools/keycode",
-        icon: Keyboard,
+        icon: Gpu,
         description: "JS Event codes.",
       },
     ],
