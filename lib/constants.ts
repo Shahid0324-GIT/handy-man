@@ -27,6 +27,10 @@ import {
   Eye,
   type LucideIcon,
   Calculator,
+  Database,
+  PaintBucket,
+  LockKeyhole,
+  Server,
 } from "lucide-react";
 
 export const APP_CONFIG = {
@@ -146,6 +150,42 @@ export const NAV_ITEMS: NavGroup[] = [
     ],
   },
   {
+    title: "Database & Backend",
+    icon: Database,
+    items: [
+      {
+        title: "SQL Formatter",
+        url: "/tools/sql",
+        icon: Database,
+        description: "Format SQL queries.",
+      },
+      {
+        title: "Timestamp",
+        url: "/tools/timestamp",
+        icon: Clock,
+        description: "Unix/Epoch converter.",
+      },
+      {
+        title: "Chmod Calc",
+        url: "/tools/chmod",
+        icon: LockKeyhole,
+        description: "Unix permissions.",
+      },
+      {
+        title: "Slugify",
+        url: "/tools/slug",
+        icon: LinkIcon,
+        description: "String to URL slug.",
+      },
+      {
+        title: "Mock API Data",
+        url: "/tools/mock-api",
+        icon: Server,
+        description: "Generate dummy JSON for Users, Posts, etc.",
+      },
+    ],
+  },
+  {
     title: "Generators",
     icon: Zap,
     items: [
@@ -178,6 +218,12 @@ export const NAV_ITEMS: NavGroup[] = [
         url: "/tools/cron",
         icon: Clock,
         description: "Cron schedule builder.",
+      },
+      {
+        title: "Color Converter",
+        url: "/tools/color",
+        icon: PaintBucket,
+        description: "Hex to RGB.",
       },
     ],
   },

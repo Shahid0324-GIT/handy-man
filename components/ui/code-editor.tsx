@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import dynamic from "next/dynamic";
 import { useTheme } from "next-themes";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -45,7 +44,9 @@ export function CodeEditor({
           "h-full w-full resize-none bg-background p-4 font-mono text-sm outline-none ring-offset-background placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
           "border rounded-md",
           readOnly && "bg-muted/30 text-muted-foreground",
-          wordWrap === "on" ? "break-all whitespace-pre-wrap" : "whitespace-pre"
+          wordWrap === "on"
+            ? "break-all whitespace-pre-wrap"
+            : "whitespace-pre",
         )}
         placeholder={`Enter ${language} here...`}
       />
