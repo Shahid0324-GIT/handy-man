@@ -26,6 +26,7 @@ import {
   Tags,
   Eye,
   type LucideIcon,
+  Calculator,
 } from "lucide-react";
 
 export const APP_CONFIG = {
@@ -550,5 +551,50 @@ export const icons = [
     sizes: "1024x1024",
     type: "image/png",
     purpose: "any maskable" as "any" | "maskable",
+  },
+];
+
+export const FEATURES = [
+  {
+    icon: FileJson,
+    title: "Converters",
+    desc: "JSON, CSV, Base64, and Image conversion handled locally.",
+    color: "text-blue-600 dark:text-yellow-500",
+    bg: "bg-blue-600/10 dark:bg-yellow-500/10",
+  },
+  {
+    icon: Hash,
+    title: "Security",
+    desc: "Generate Hashes (MD5, SHA), Encrypt text (AES), and decode JWTs.",
+    color: "text-green-600 dark:text-red-500",
+    bg: "bg-green-600/10 dark:bg-red-500/10",
+  },
+  {
+    icon: QrCode,
+    title: "Generators",
+    desc: "Create UUIDs, QR Codes, Lorem Ipsum text, and CSS Shadows.",
+    color: "text-blue-500 dark:text-yellow-400",
+    bg: "bg-blue-500/10 dark:bg-yellow-400/10",
+  },
+  {
+    icon: Globe,
+    title: "Web Tools",
+    desc: "URL Encoding, HTML Entities, Meta Tag generation, and more.",
+    color: "text-green-500 dark:text-red-400",
+    bg: "bg-green-500/10 dark:bg-red-400/10",
+  },
+  {
+    icon: Calculator,
+    title: "Math & Time",
+    desc: "Unix Timestamp conversion, Number Base (Hex/Bin), and Math utils.",
+    color: "text-blue-400 dark:text-yellow-600",
+    bg: "bg-blue-400/10 dark:bg-yellow-600/10",
+  },
+  {
+    icon: Cpu,
+    title: "Offline PWA",
+    desc: "Works without internet. Installable on Windows, Mac, iOS, Android.",
+    color: "text-green-600 dark:text-red-600",
+    bg: "bg-green-600/10 dark:bg-red-600/10",
   },
 ];
