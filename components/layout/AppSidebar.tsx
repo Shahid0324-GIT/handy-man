@@ -20,12 +20,13 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { NAV_ITEMS, APP_CONFIG } from "@/lib/constants";
-import { Terminal, ChevronRight, Search, Star } from "lucide-react"; // Added Star
+import { NAV_ITEMS } from "@/lib/constants";
+import { ChevronRight, Search, Star } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { useFavoritesStore } from "@/hooks/use-favorites-store";
+import Image from "next/image";
 
 export function AppSidebar() {
   const pathname = usePathname();
@@ -79,15 +80,13 @@ export function AppSidebar() {
               className="hover:bg-transparent hover:text-primary"
             >
               <Link href="/">
-                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-indigo-600 text-white shadow-sm">
-                  <Terminal className="size-5" />
-                </div>
-                <div className="flex flex-col gap-0.5 leading-none ml-2">
-                  <span className="font-bold text-base">{APP_CONFIG.name}</span>
-                  <span className="text-xs text-muted-foreground font-medium">
-                    v{APP_CONFIG.version}
-                  </span>
-                </div>
+                <Image
+                  src={"/logo_wide.png"}
+                  width={300}
+                  height={80}
+                  alt="logo"
+                  className="object-contain"
+                />
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -154,7 +153,7 @@ export function AppSidebar() {
             {NAV_ITEMS.map((group) => {
               // Check if any child is active to keep group open
               const isGroupActive = group.items.some(
-                (item) => pathname === item.url
+                (item) => pathname === item.url,
               );
 
               return (

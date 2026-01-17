@@ -6,7 +6,15 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Copy, Keyboard, Smartphone, Cpu, Monitor, Wifi } from "lucide-react";
+import {
+  Copy,
+  Keyboard,
+  Smartphone,
+  Cpu,
+  Monitor,
+  Wifi,
+  X,
+} from "lucide-react";
 import { toast } from "sonner";
 
 interface KeyInfo {
@@ -41,15 +49,24 @@ interface ExtendedNavigator extends Navigator {
 export default function KeycodePage() {
   const [event, setEvent] = useState<KeyInfo | null>(null);
   const [hardware, setHardware] = useState<HardwareInfo | null>(null);
+  const [isMobileInputOpen, setIsMobileInputOpen] = useState(false);
+  const [inputValue, setInputValue] = useState("");
 
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent | React.KeyboardEvent) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Prevent default for special keys to avoid page scrolling
+      if (
+        ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", " "].includes(e.key)
+      ) {
+        e.preventDefault();
+      }
+
       setEvent({
         key: e.key === " " ? "(Space)" : e.key,
         code: e.code,
-        which: e.which,
+        which: e.which || e.keyCode,
         location: e.location,
         ctrlKey: e.ctrlKey,
         metaKey: e.metaKey,
@@ -82,9 +99,58 @@ export default function KeycodePage() {
   };
 
   const openMobileKeyboard = () => {
+    setIsMobileInputOpen(true);
+    setTimeout(() => {
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
+    }, 100);
+  };
+
+  const closeMobileKeyboard = () => {
+    setIsMobileInputOpen(false);
+    setInputValue("");
     if (inputRef.current) {
-      inputRef.current.focus();
-      toast.info("Keyboard opened! Start typing.");
+      inputRef.current.blur();
+    }
+  };
+
+  const handleMobileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    const lastChar = newValue[newValue.length - 1];
+
+    if (lastChar) {
+      // Get the character code
+      const charCode = lastChar.charCodeAt(0);
+
+      setEvent({
+        key: lastChar === " " ? "(Space)" : lastChar,
+        code: `Key${lastChar.toUpperCase()}`,
+        which: charCode,
+        location: 0,
+        ctrlKey: false,
+        metaKey: false,
+        shiftKey: false,
+        altKey: false,
+      });
+    }
+
+    setInputValue(newValue);
+  };
+
+  const handleMobileKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    // Handle special keys like Backspace, Enter, etc.
+    if (e.key === "Backspace" || e.key === "Enter" || e.key === "Delete") {
+      setEvent({
+        key: e.key,
+        code: e.code,
+        which: e.which || e.keyCode,
+        location: e.location,
+        ctrlKey: e.ctrlKey,
+        metaKey: e.metaKey,
+        shiftKey: e.shiftKey,
+        altKey: e.altKey,
+      });
     }
   };
 
@@ -109,14 +175,36 @@ export default function KeycodePage() {
             </Button>
           </div>
 
-          <input
-            ref={inputRef}
-            type="text"
-            className="opacity-0 absolute h-0 w-0"
-            autoComplete="off"
-            autoCorrect="off"
-            autoCapitalize="off"
-          />
+          {isMobileInputOpen && (
+            <Card className="p-4 bg-primary/5 border-primary/20 md:hidden">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm font-semibold">Mobile Input</span>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={closeMobileKeyboard}
+                  className="h-6 w-6"
+                >
+                  <X className="size-4" />
+                </Button>
+              </div>
+              <input
+                ref={inputRef}
+                type="text"
+                value={inputValue}
+                onChange={handleMobileInput}
+                onKeyDown={handleMobileKeyDown}
+                className="w-full px-3 py-2 border rounded-md bg-background"
+                placeholder="Type here..."
+                autoComplete="off"
+                autoCorrect="off"
+                autoCapitalize="off"
+              />
+              <p className="text-xs text-muted-foreground mt-2">
+                Type any character to see its key code
+              </p>
+            </Card>
+          )}
 
           {!event ? (
             <div
@@ -243,7 +331,7 @@ export default function KeycodePage() {
               <div className="space-y-2">
                 <div className="flex justify-between">
                   <span>Resolution</span>
-                  <span className="font-mono font-bold">
+                  <span className="font-mono font-bold text-sm">
                     {hardware?.screenRes}
                   </span>
                 </div>
@@ -272,13 +360,13 @@ export default function KeycodePage() {
               <div className="space-y-2">
                 <div className="flex justify-between">
                   <span>Connection</span>
-                  <span className="font-mono font-bold uppercase">
+                  <span className="font-mono font-bold uppercase text-sm">
                     {hardware?.connection}
                   </span>
                 </div>
                 <div className="flex flex-col gap-1 mt-2">
                   <span className="text-sm">User Agent</span>
-                  <div className="text-[10px] text-muted-foreground bg-muted p-2 rounded break-all font-mono leading-tight">
+                  <div className="text-[10px] text-muted-foreground bg-muted p-2 rounded break-all font-mono leading-tight max-h-20 overflow-y-auto">
                     {hardware?.userAgent}
                   </div>
                 </div>
@@ -302,13 +390,13 @@ function InfoCard({
 }) {
   return (
     <Card
-      className="p-4 flex flex-col items-center justify-center gap-2 cursor-pointer hover:border-primary/50 transition-colors group"
+      className="p-4 flex flex-col items-center justify-center gap-2 cursor-pointer hover:border-primary/50 transition-colors group relative"
       onClick={() => onCopy(value)}
     >
       <span className="text-xs font-semibold text-muted-foreground uppercase">
         {label}
       </span>
-      <span className="text-xl md:text-2xl font-bold font-mono group-hover:text-primary transition-colors truncate max-w-full">
+      <span className="text-xl md:text-2xl font-bold font-mono group-hover:text-primary transition-colors truncate max-w-full px-2">
         {value}
       </span>
       <Button
