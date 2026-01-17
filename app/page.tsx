@@ -2,11 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
-
+import { Navbar } from "@/components/landing/navbar";
 import { Hero } from "@/components/landing/hero";
 import { FeatureGrid } from "@/components/landing/feature-grid";
 import { SiteFooter } from "@/components/landing/site-footer";
-import { ThemeToggle } from "@/components/theme-toggle";
 import Aurora from "@/components/Aurora";
 
 export default function Home() {
@@ -19,9 +18,7 @@ export default function Home() {
   }, []);
 
   const COLORS_LIGHT = ["#FFFFFF", "#BFDBFE", "#A7F3D0"];
-
   const COLORS_DARK = ["#FF3232", "#FF94B4", "#3A29FF"];
-
   const currentColors =
     mounted && resolvedTheme === "light" ? COLORS_LIGHT : COLORS_DARK;
 
@@ -39,13 +36,12 @@ export default function Home() {
       </div>
 
       <div className="relative z-10">
-        <div className="fixed top-4 right-4 z-50">
-          <ThemeToggle />
+        <Navbar />
+        <div className="pt-16">
+          <Hero />
+          <FeatureGrid />
+          <SiteFooter />
         </div>
-
-        <Hero />
-        <FeatureGrid />
-        <SiteFooter />
       </div>
     </main>
   );

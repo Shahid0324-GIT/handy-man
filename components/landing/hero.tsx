@@ -48,7 +48,7 @@ export function Hero() {
           >
             25+ essential tools in one offline-capable PWA.
             <br className="hidden md:block" />
-            Encryption, conversions, and code generation—entirely client-side.
+            Encryption, conversions, and code generation entirely client-side.
           </motion.p>
 
           {/* CTA Buttons */}
@@ -65,7 +65,7 @@ export function Hero() {
               bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-500/20
               dark:bg-yellow-500 dark:text-black dark:hover:bg-yellow-400 dark:shadow-yellow-500/20"
             >
-              <Link href="/tools/json">
+              <Link href="/tools">
                 Start Using Tools <ArrowRight className="ml-2 size-4" />
               </Link>
             </Button>
